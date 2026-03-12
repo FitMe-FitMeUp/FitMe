@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    # HikariCP 튜닝
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 10
+      connection-timeout: 30000
+      max-lifetime: 1800000
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate # (중복 제거) 운영에선 validate 필수
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100 # (덮어쓰기) Prod는 성능 위해 100으로 증가
+
+logging:
+  level:
+    com.ootd: info
+    org.hibernate.SQL: warn
+    org.hibernate.orm.jdbc.bind: error
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus, metrics, caches # (보안) Prod는 * 대신 필요한 것만 노출
+  endpoint:
+    health:
+      show-details: always # (보안) 운영서버지만 초기에 잘 뜨는지 확인하기위해 always설정 추후 when_authorized 변경 고려

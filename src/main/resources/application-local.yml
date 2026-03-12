@@ -1,0 +1,65 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:fitme;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    # HikariCP 튜닝(local 에서 테스트해볼때 쓸것)
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 10
+      connection-timeout: 30000
+      max-lifetime: 1800000
+  h2:
+    console:
+      enabled: on
+      path: /h2-console
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  kafka: # NOTE: 현재 카프카 사용은 안하지만 미리 세팅 추후 사용할때 참고
+    bootstrap-servers: localhost:9092
+
+  cache:
+    type: caffeine # TODO: 추후 redis 타입으로 변경해서 사용할것
+    redis:
+      enable-statistics: true
+
+  data: # TODO: 추후 redis로 연결할때 볼것
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+    com.ootd: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    caches:
+      access: unrestricted
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  info:
+    env:
+      enabled: true
+  observations:
+    annotations:
+      enabled: true
+
+fitme:
+  storage:
+    type: local  # <= 여기 값이 'local'일 때만 LocalBinaryContentStorage를 빈으로 등록, s3 이면 S3BinaryContentStorage 빈 등록
