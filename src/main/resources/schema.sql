@@ -269,27 +269,29 @@ CREATE TABLE follows
         CHECK (follower_id <> followee_id)
 );
 
-CREATE TABLE user_active_location
+CREATE TABLE user_active_locations
 (
     id             UUID PRIMARY KEY,
     user_id        UUID                     NOT NULL,
     region_id      UUID                     NOT NULL,
     last_active_at TIMESTAMP WITH TIME ZONE NOT NULL,
-    CONSTRAINT fk_user_active_location_user
+    created_at     TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at     TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT fk_user_active_locations_user
         FOREIGN KEY (user_id) REFERENCES users (id),
-    CONSTRAINT fk_user_active_location_region
+    CONSTRAINT fk_user_active_locations_region
         FOREIGN KEY (region_id) REFERENCES regions (id),
-    CONSTRAINT uk_user_active_location_user
+    CONSTRAINT uk_user_active_locations_user
         UNIQUE (user_id)
 );
 
-CREATE TABLE user_weather_notification
+CREATE TABLE user_weather_notifications
 (
     id          UUID PRIMARY KEY,
     notice_type VARCHAR                  NOT NULL,
     sent_at     TIMESTAMP WITH TIME ZONE NOT NULL,
     user_id     UUID                     NOT NULL,
-    CONSTRAINT fk_user_weather_notification_user
+    CONSTRAINT fk_user_weather_notifications_user
         FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
