@@ -1,6 +1,7 @@
 package com.ootd.fitme.domain.userweathernotification.entity;
 
 import com.ootd.fitme.domain.base.BaseUpdateEntity;
+import com.ootd.fitme.domain.userweathernotification.enums.NoticeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -33,8 +34,8 @@ public class UserWeatherNotification extends BaseUpdateEntity {
         this.userId = userId;
     }
 
-    public static UserWeatherNotification create(NoticeType noticeType, Instant sendAt, UUID userId) {
-        return new UserWeatherNotification(noticeType, sendAt, userId);
+    public static UserWeatherNotification create(NoticeType noticeType, Instant sentAt, UUID userId) {
+        return new UserWeatherNotification(noticeType, sentAt, userId);
     }
 
 

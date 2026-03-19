@@ -24,12 +24,12 @@ public class WeatherForecast extends BaseEntity {
     @Column(name = "forecast_at", nullable = false)
     private Instant forecastAt;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "sky_status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private SkyStatus skyStatus;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "precipitation_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private PrecipitationType precipitationType;
 
     @Column(name = "precipitation_amount", nullable = false)
@@ -59,8 +59,8 @@ public class WeatherForecast extends BaseEntity {
     @Column(name = "wind_speed", nullable = false)
     private Double windSpeed;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "wind_strength_word", nullable = false)
+    @Enumerated(EnumType.STRING)
     private WindStrengthWord windStrengthWord;
 
     @JoinColumn(name = "region_id", nullable = false)
