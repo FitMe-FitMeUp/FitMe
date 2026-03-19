@@ -291,6 +291,8 @@ CREATE TABLE user_weather_notifications
     notice_type VARCHAR                  NOT NULL,
     sent_at     TIMESTAMP WITH TIME ZONE NOT NULL,
     user_id     UUID                     NOT NULL,
+    created_at  TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at  TIMESTAMP WITH TIME ZONE NULL,
     CONSTRAINT fk_user_weather_notifications_user
         FOREIGN KEY (user_id) REFERENCES users (id)
 );
