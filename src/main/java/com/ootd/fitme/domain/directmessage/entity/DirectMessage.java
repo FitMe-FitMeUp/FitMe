@@ -31,7 +31,7 @@ public class DirectMessage extends BaseEntity {
         this.content = content;
     }
 
-    public static DirectMessage of(UUID senderId, UUID receiverId, String content) {
+    public static DirectMessage create(UUID senderId, UUID receiverId, String content) {
         return new DirectMessage(senderId, receiverId, content);
     }
 
