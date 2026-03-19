@@ -28,7 +28,9 @@ CREATE TABLE users (
                        created_at TIMESTAMP WITH TIME ZONE NOT NULL,
                        updated_at TIMESTAMP WITH TIME ZONE NULL,
                        CONSTRAINT chk_users_role
-                           CHECK (role IN ('USER', 'ADMIN'))
+                           CHECK (role IN ('USER', 'ADMIN')),
+                       CONSTRAINT uk_users_provider_provider_id
+                           UNIQUE (provider, provider_id)
 );
 
 CREATE TABLE profiles (
