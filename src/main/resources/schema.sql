@@ -200,10 +200,10 @@ CREATE TABLE feeds
     like_count    INTEGER                  NOT NULL DEFAULT 0,
     created_at    TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at    TIMESTAMP WITH TIME ZONE NULL,
-    weather_id    UUID                     NOT NULL,
+    weather_forecast_id    UUID                     NOT NULL,
     user_id       UUID                     NOT NULL,
     CONSTRAINT fk_feeds_weather
-        FOREIGN KEY (weather_id) REFERENCES weather_forecast (id),
+        FOREIGN KEY (weather_forecast_id) REFERENCES weather_forecast (id),
     CONSTRAINT fk_feeds_user
         FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT chk_feeds_comment_count
