@@ -20,6 +20,11 @@ spring:
       hibernate:
         default_batch_fetch_size: 100 # (덮어쓰기) Prod는 성능 위해 100으로 증가
 
+  cache:
+    type: redis
+    redis:
+      enable-statistics: true
+
 logging:
   level:
     com.ootd: info

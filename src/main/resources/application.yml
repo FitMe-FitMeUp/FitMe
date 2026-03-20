@@ -26,6 +26,9 @@ spring:
     job:
       enabled: false
 
+  autoconfigure: # TODO: 추후 도커 redis 서버 연결시 redis 자동설정 무시했던 이부분 지울것
+    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+
   storage:
     type: azure # s3?? azure(?? blob)? ??
     app:
