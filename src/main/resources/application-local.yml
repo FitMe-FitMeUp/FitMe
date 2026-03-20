@@ -25,7 +25,7 @@ spring:
     bootstrap-servers: localhost:9092
 
   cache:
-    type: caffeine # TODO: 추후 redis 타입으로 변경해서 사용할것
+    type: caffeine
     redis:
       enable-statistics: true
 
