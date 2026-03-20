@@ -2,9 +2,7 @@ package com.ootd.fitme.domain.userweathernotification.entity;
 
 import com.ootd.fitme.domain.base.BaseUpdateEntity;
 import com.ootd.fitme.domain.userweathernotification.enums.NoticeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +18,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class UserWeatherNotification extends BaseUpdateEntity {
 
     @Column(name = "notice_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private NoticeType noticeType;
 
     @Column(name = "sent_at", nullable = false)

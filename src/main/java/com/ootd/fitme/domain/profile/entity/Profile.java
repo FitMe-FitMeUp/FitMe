@@ -8,7 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Entity
@@ -45,7 +45,7 @@ public class Profile extends BaseUpdateEntity {
     private Gender gender;
 
     @Column(name = "birth_date")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "temperature_sensitivity", nullable = false)
     private int temperatureSensitivity = 3;
@@ -71,7 +71,7 @@ public class Profile extends BaseUpdateEntity {
                     String regionOneDepthName,
                     String regionTwoDepthName,
                     String regionThreeDepthName,
-                    Gender gender, Date birthDate,
+                    Gender gender, LocalDate birthDate,
                     String profileImageUrl,
                     User user
     ) {
@@ -99,7 +99,7 @@ public class Profile extends BaseUpdateEntity {
             String regionTwoDepthName,
             String regionThreeDepthName,
             Gender gender,
-            Date birthDate,
+            LocalDate birthDate,
             String profileImageUrl,
             User user
     ) {

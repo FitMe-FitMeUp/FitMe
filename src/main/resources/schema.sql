@@ -294,7 +294,9 @@ CREATE TABLE user_weather_notifications
     created_at  TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at  TIMESTAMP WITH TIME ZONE NULL,
     CONSTRAINT fk_user_weather_notifications_user
-        FOREIGN KEY (user_id) REFERENCES users (id)
+        FOREIGN KEY (user_id) REFERENCES users (id),
+    CONSTRAINT chk_user_weather_notifications_notice_type
+        CHECK (notice_type IN ('RAIN'))
 );
 
 CREATE TABLE notifications
