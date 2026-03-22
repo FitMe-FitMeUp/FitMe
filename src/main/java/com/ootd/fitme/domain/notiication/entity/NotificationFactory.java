@@ -98,13 +98,4 @@ public class NotificationFactory {
         );
     }
 
-    public Notification dateDeleted(User user, String attributeName) {
-        return Notification.create(
-                NotificationLevel.WARN,
-                "["+attributeName+"]"+ " 속성이 삭제되었습니다.",
-                "속성을 확인해보세요",
-                NotificationType.ATTRIBUTE_DELETED,
-                user
-        );
-    }
 }
