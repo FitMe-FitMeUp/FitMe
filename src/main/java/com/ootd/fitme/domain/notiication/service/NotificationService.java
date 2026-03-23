@@ -8,12 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class notificationService {
+public class NotificationService {
 
     private final NotificationRepository notificationRepository;
     private final NotificationFactory notificationFactory;
