@@ -17,7 +17,7 @@ import java.util.UUID;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class notificationServiceTest {
+class NotificationServiceTest {
     @Mock
     private NotificationRepository notificationRepository;
 
