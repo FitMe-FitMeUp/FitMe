@@ -76,12 +76,12 @@ class NotificationEventListenerUnitTest {
 
 
             FeedLikedCreateEvent event =
-                    new FeedLikedCreateEvent(feedId,likeId,likedId,likerId, "liker", Instant.now());
+                    new FeedLikedCreateEvent(feedId,likeId,likedId,likerId,"feedName", "liker", Instant.now());
 
             listener.feedLiked(event);
 
             verify(notificationService)
-                    .notifyFeedLiked(likedId, "liker");
+                    .notifyFeedLiked(likedId, "feedName","liker");
         }
 
         @Test
@@ -98,6 +98,7 @@ class NotificationEventListenerUnitTest {
                             feedId,
                             feedOwnerId,
                             commenterId,
+                            "feedName",
                             "commenter",
                              "nice",
                             Instant.now());
@@ -105,7 +106,7 @@ class NotificationEventListenerUnitTest {
             listener.feedCommented(event);
 
             verify(notificationService)
-                    .notifyFeedCommented(feedOwnerId, "commenter", "nice");
+                    .notifyFeedCommented(feedOwnerId,"feedName", "commenter", "nice");
         }
 
         @Test
