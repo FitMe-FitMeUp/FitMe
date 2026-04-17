@@ -1,3 +1,4 @@
+
 # 👕 FitMe!
 
 ![GitHub Actions Workflow Status](https://github.com/FitMe-FitMeUp/FitMe/actions/workflows/cd-deploy.yml/badge.svg?branch=main)
@@ -9,9 +10,9 @@
 ---
 
 ## 🔗 프로젝트 링크
-- **팀 협업 문서:** [https://www.notion.so/FitMe-51b7885bebca83639cd7819aaf5ba042](#)
-- **발표 자료:** [PDF/Slide 링크](#)
-
+- **배포 URL:** https://fitme-nginx.mangofield-4b56edf3.koreacentral.azurecontainerapps.io/
+- **팀 협업 문서:** https://www.notion.so/FitMe-51b7885bebca83639cd7819aaf5ba042
+- **발표 자료:** [Fitme 발표](https://github.com/user-attachments/files/26814162/Fitme.pdf.pdf)
 ---
 
 ## 👥 팀원 구성 및 역할
@@ -89,22 +90,41 @@
 - **피드 관리:** OOTD 게시물 업로드 및 조회 기능 개발
 - **날씨 관리:** Redis를 이용한 날씨 데이터 조회 성능 최적화
 
+### 트러블슈팅
+- 간단 명료
+
 ### 🔹 김진우
 - **CD + 인프라 구축:** Azure 기반 자동화 배포 환경 구축
 - **DM (WebSocket):** 실시간 메시징 시스템 구현
 - **팔로우:** 사용자 관계 관리 기능 개발
 
+### 트러블슈팅
+- 간단 명료
+  
 ### 🔹 신제원
 - **알림 (SSE):** 실시간 활동 알림 시스템 구현
 
+### 트러블슈팅
+- 간단 명료
 ### 🔹 이형일
 - **인증/프로필:** OAuth2 및 JWT 보안, 유저 정보 관리 개발
 - **날씨 관리:** Spring Batch 기반 공공 API 데이터 수집 파이프라인 구축
 
+### 트러블슈팅
+- 간단 명료
 ### 🔹 최현석
 - **추천 엔진:** 사용자 데이터 기반 개인화 코디 추천 로직 개발
 
-### 🔹 조성연 (의상/속성 관리 및 데이터 최적화)
+### 트러블슈팅
+- 간단 명료
+### 🔹 조성연 
+
+- **옷 관리:**
+- **옷 속성관리:**
+- 
+
+### 트러블슈팅
+
 **비즈니스 로직의 핵심인 의상 도메인을 총괄하며 AI 연동과 시스템 최적화**
 
 #### 1. 도메인 생명주기 통제 (DDD Aggregate)
@@ -130,23 +150,11 @@
 
 ```
 
-## 🌐 구현 홈페이지
-- **배포 URL:** [https://fitme-nginx.mangofield-4b56edf3.koreacentral.azurecontainerapps.io](#)
-
-## 📝 프로젝트 회고록 (Deep-Dive)
-- **JPA 도메인 생명주기 완벽 통제**
-    - 복잡하게 얽힌 5개 이상의 엔티티를 Aggregate로 묶어 데이터 무결성을 확보
-- **백엔드 개발자의 E2E 트러블 슈팅**
-    - React 환경에서의 비동기 타임아웃 해결 및 이미지 CORS 문제를 File 객체 변환으로 우회
-- **보이지 않는 병목, I/O 트랜잭션 분리**
-    - 외부 스토리지 I/O를 메인 트랜잭션에서 분리하고 스케줄러를 통해 배치 처리한 성능 최적화
-- **비싼 LLM API, 캐싱으로 비용 절감**
-    - URL 정규화 로직과 DB 캐싱을 통해 응답 속도를 5초에서 50ms로 단축시킨 아키텍처 개선
 
 ---
 
 ## 💭 팀 회고 (Retrospective)
-- **김태언:**
+- **김태언:** [링크]
 - **김진우:**
 - **신제원:**
 - **이형일:**
@@ -155,4 +163,3 @@
 
 
 
-- **팀 전체 발표 자료:** [FitMe! 프로젝트 발표 Slide 링크](#)
