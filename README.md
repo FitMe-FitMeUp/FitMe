@@ -16,8 +16,8 @@
 ---
 
 ## 👥 팀원 구성 및 역할
-- **김진우:** CD + 인프라 구축, DM(WebSocket), 팔로우 기능
-- **김태언:** CD + 인프라 구축, 피드 관리, 날씨 관리(Redis 심화)
+- **김태언(팀장):** CI/CD 파이프라인 구축 + 인프라 구축, 피드 관리(게시물, 댓글, 좋아요 도메인 전반 설계 및 구현)
+- **김진우:** CI/CD 파이프라인 구축 + 인프라 구축, DM(WebSocket), 팔로우 기능
 - **신제원:** 실시간 알림 시스템 (SSE)
 - **이형일:** 인증 관리, 프로필 관리, 날씨 관리(Spring Batch 기반)
 - **최현석:** 맞춤형 추천 엔진 개발
@@ -25,10 +25,12 @@
 ---
 
 ## 📝 프로젝트 소개
-- **목적:** 날씨에 따른 의상 선택의 번거로움을 해결하고, 자신의 옷장을 디지털화하여 관리하는 서비스 제공
-- **핵심 기능:** - 구매 링크 기반 의상 정보 자동 등록 (AI 추출)
-    - 위치 기반 실시간 날씨 맞춤 코디 추천
-    - OOTD 피드 공유 및 사용자 간 팔로우/DM 소통
+- **목적:** 사용자의 옷장을 디지털화하고, 실시간 날씨와 AI 분석을 기반으로 코디를 추천하며, 피드, 댓글, 좋아요, DM, 실시간 알림 기능을 통해 사용자 간 스타일을 공유하고 소통할 수 있는 플랫폼 제공
+- **핵심 기능:**
+    - 구매 링크 기반 의상 정보 자동 등록 (AI 추출)
+    - 위치 기반 실시간 날씨를 활용한 맞춤 코디 추천
+    - OOTD 피드 공유, 댓글, 좋아요, 팔로우, DM 기능을 통한 사용자 간 소통
+    - SSE 기반 실시간 알림 시스템 제공
 - **프로젝트 기간:** 2026.03.10 ~ 2026.04.17
 
 ---
@@ -62,9 +64,17 @@
 - **CI/CD 파이프라인:** GitHub Actions를 활용하여 빌드 및 배포 자동화 구축
 - **안정성 보장:** PR 생성 시 CI에서 테스트를 통과하지 못하면 Merge를 원천 차단하도록 정책 설정
 - **Azure 인프라:**
-    - **VNet (Virtual Network):** 독립된 사설 네트워크 망을 통한 보안 강화
-    - **ACR / 컨테이너 환경:** Docker 기반 이미지 관리 및 배포
-    - **Blob Storage:** 의상 및 프로필 미디어 객체 저장소
+    - **네트워크:** VNet, NAT Gateway, Nginx (Reverse Proxy 및 트래픽 라우팅, Outbound IP 고정 및 외부 API whitelist 대응)
+
+    - **컨테이너 환경:** ACR, Azure Container Apps (컨테이너 기반 서비스 배포 및 운영)
+
+    - **데이터 저장소:** PostgreSQL, Blob Storage (미디어 파일 저장)
+
+    - **캐시:** Azure Cache for Redis (조회 성능 최적화)
+
+    - **메시징:** Kafka / Event Hub (비동기 이벤트 처리)
+
+    - **검색:** Elasticsearch (VM 기반 직접 운영)
 
 ### Monitoring & Testing
 ![Spring Actuator](https://img.shields.io/badge/Spring%20Actuator-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
@@ -72,6 +82,7 @@
 ![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
 ![Jacoco](https://img.shields.io/badge/Jacoco-8A2BE2?style=for-the-badge&logo=eclipse&logoColor=white)
 ![Codecov](https://img.shields.io/badge/Codecov-F01F7A?style=for-the-badge&logo=codecov&logoColor=white)
+- **모니터링:** Spring Actuator를 통해 애플리케이션 상태 및 메트릭을 수집하고, Prometheus로 수집된 데이터를 Grafana를 통해 시각화하여 운영 상태를 모니터링
 - **Coverage Policy:** 단위/통합 테스트 코드 작성 후 Jacoco로 커버리지를 측정하고, Codecov와 연동하여 실시간 모니터링 진행
 
 ### API & External Services
@@ -86,12 +97,48 @@
 
 ## 💻 팀원별 구현 기능 상세
 
-### 🔹 김태언
-- **피드 관리:** OOTD 게시물 업로드 및 조회 기능 개발
-- **날씨 관리:** Redis를 이용한 날씨 데이터 조회 성능 최적화
+### 🔹 김태언(팀장)
+- **피드 관리:** 피드 게시물 생성, 조회, 좋아요, 댓글 기능 개발
+
+- **검색 기능 구현:** 사용자 입력(오타, 부분 검색 등)을 고려한 피드 검색 기능 개발
+
+- **조회 기능 최적화:** 대량 데이터 조회를 고려한 댓글 및 피드 목록 조회 구조 개선
+
+- **인프라 설계 및 운영:** Azure 기반 클라우드 인프라 및 로컬 Docker Compose 환경 구성
 
 ### 트러블슈팅
-- 간단 명료
+
+**피드 도메인을 중심으로 검색 품질, 조회 성능, 동시성, 인프라 안정성 개선**
+
+#### 1. 좋아요 동시성 처리
+
+- DB atomic update 적용으로 race condition 방지 및 데이터 정합성 확보
+
+- 낙관적/비관적 락 대신 단일 update 쿼리 방식으로 고빈도 좋아요 요청 대응
+
+#### 2. 부분 검색 지원
+
+- Elasticsearch ngram analyzer 적용으로 content 중간 문자열 검색 지원
+
+- Nori, fuzziness와 결합하여 오타·부분 검색·단어 순서 변경 대응
+
+#### 3. 목록 조회 성능 개선
+
+- 피드 목록 조회 시 feedId 기반 batch query(IN 조회) 적용으로 하위 데이터 일괄 조회
+
+- Map 기반 메모리 그룹핑으로 DTO 조립 및 N+1 문제 완화
+
+#### 4. 조회 구조 개선
+
+- FeedQueryService/Repository 분리로 조회 로직과 도메인 로직 책임 분리
+
+- Projection 기반 조회 후 조립 구조 적용으로 유지보수성 및 확장성 개선
+
+#### 5. 외부 API 연동 안정화
+
+- Azure NAT Gateway 적용으로 outbound IP 고정 및 whitelist 기반 외부 API 호출 문제 해결
+
+- 내부 서비스와 외부 노출 대상 분리로 운영 환경 네트워크 안정성 개선
 
 ### 🔹 김진우
 - **CD + 인프라 구축:** Azure 기반 자동화 배포 환경 구축
@@ -170,20 +217,88 @@
 ---
 
 ## 📂 파일 구조
+### 애플리케이션 구조
+
 ```text
 
+com.ootd.fitme
+
+├── domain
+
+│   ├── feed (피드, 댓글, 좋아요)
+
+│   ├── clothes (의상, 속성, 카탈로그)
+
+│   ├── user (유저, 프로필, 팔로우)
+
+│   ├── notification (알림, SSE/Kafka)
+
+│   ├── directmessage (DM)
+
+│   ├── recommendation (코디 추천)
+
+│   └── weather (날씨, 지역, 배치)
+
+│
+
+├── global
+
+│   ├── config (Security, Redis, Kafka, ES 등)
+
+│   ├── security (JWT, OAuth2)
+
+│   ├── exception
+
+│   └── interceptor
+
+│
+
+├── infrastructure
+
+│   ├── ai (LLM 추출)
+
+│   ├── scraper (Playwright, Jsoup)
+
+│   ├── external (Kakao, Google, Weather API)
+
+│   ├── realtime (WebSocket)
+
+│   └── storage (이미지, 로그)
+
+│
+
+└── FitmeApplication.java
 ```
+
+### 운영 및 배포 구조
+
+```text
+
+project-root
+├── Dockerfile / Dockerfile.nginx / Dockerfile.elasticsearch
+├── compose.yml
+├── monitoring
+│   ├── grafana
+│   └── prometheus
+├── nginx
+│   ├── nginx.conf.local
+│   └── nginx.conf.prod
+└── src
+    ├── main
+    └── test
+```
+
 
 
 ---
 
 ## 개인 개발 문서(Report)
-- **김태언:** 
+- **김태언:** https://innovative-sunshine-4ce.notion.site/34586ebf7b7f801bba7be770f8cc2296
 - **김진우:**
 - **신제원:**
-- **이형일:** : https://www.notion.so/347f4865b83680039418e77a12900f3e?v=28af4865b83681b49704000c3c73b2b5&source=copy_link
+- **이형일:** https://www.notion.so/347f4865b83680039418e77a12900f3e?v=28af4865b83681b49704000c3c73b2b5&source=copy_link
 - **최현석:**
-- **조성연:** 단순한 기능 구현을 넘어 '최적의 설계'를 끊임없이 고민했습니다. JPA 도메인 통제부터 I/O 트랜잭션 분리, LLM 비용 최적화를 위한 캐싱, 그리고 Azure 인프라 환경에서의 스크래핑 차단 우회까지. 백엔드 시스템의 다양한 병목을 직접 뚫어내며 **'성능과 비즈니스를 동시에 고려하는 엔지니어링'**의 본질을 배웠습니다. 한계에 부딪힐 때마다 치열하게 머리를 맞대준 팀원들에게 깊이 감사하며, 앞으로도 아키텍처를 깊게 파고들며 집요하게 문제를 해결하는 개발자로 성장하겠습니다.
+- **조성연:** [개발 리포트](https://m-ywork-story.tistory.com/entry/%EA%B0%9C%EB%B0%9C-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A5%BC-%EB%A7%88%EC%B9%98%EB%A9%B0-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EB%B6%80%ED%84%B0-E2E-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8%EA%B9%8C%EC%A7%80%EC%9D%98-%EA%B8%B0%EB%A1%9D) | [프로젝트 회고](https://m-ywork-story.tistory.com/entry/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0-FitMe)
 
 
 
