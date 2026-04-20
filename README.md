@@ -65,15 +65,10 @@
 - **안정성 보장:** PR 생성 시 CI에서 테스트를 통과하지 못하면 Merge를 원천 차단하도록 정책 설정
 - **Azure 인프라:**
     - **네트워크:** VNet, NAT Gateway, Nginx (Reverse Proxy 및 트래픽 라우팅, Outbound IP 고정 및 외부 API whitelist 대응)
-
     - **컨테이너 환경:** ACR, Azure Container Apps (컨테이너 기반 서비스 배포 및 운영)
-
     - **데이터 저장소:** PostgreSQL, Blob Storage (미디어 파일 저장)
-
     - **캐시:** Azure Cache for Redis (조회 성능 최적화)
-
     - **메시징:** Kafka / Event Hub (비동기 이벤트 처리)
-
     - **검색:** Elasticsearch (VM 기반 직접 운영)
 
 ### Monitoring & Testing
@@ -99,11 +94,8 @@
 
 ### 🔹 김태언(팀장)
 - **피드 관리:** 피드 게시물 생성, 조회, 좋아요, 댓글 기능 개발
-
 - **검색 기능 구현:** 사용자 입력(오타, 부분 검색 등)을 고려한 피드 검색 기능 개발
-
 - **조회 기능 최적화:** 대량 데이터 조회를 고려한 댓글 및 피드 목록 조회 구조 개선
-
 - **인프라 설계 및 운영:** Azure 기반 클라우드 인프라 및 로컬 Docker Compose 환경 구성
 
 ### 트러블슈팅
@@ -113,31 +105,26 @@
 #### 1. 좋아요 동시성 처리
 
 - DB atomic update 적용으로 race condition 방지 및 데이터 정합성 확보
-
 - 낙관적/비관적 락 대신 단일 update 쿼리 방식으로 고빈도 좋아요 요청 대응
 
 #### 2. 부분 검색 지원
 
 - Elasticsearch ngram analyzer 적용으로 content 중간 문자열 검색 지원
-
 - Nori, fuzziness와 결합하여 오타·부분 검색·단어 순서 변경 대응
 
 #### 3. 목록 조회 성능 개선
 
 - 피드 목록 조회 시 feedId 기반 batch query(IN 조회) 적용으로 하위 데이터 일괄 조회
-
 - Map 기반 메모리 그룹핑으로 DTO 조립 및 N+1 문제 완화
 
 #### 4. 조회 구조 개선
 
 - FeedQueryService/Repository 분리로 조회 로직과 도메인 로직 책임 분리
-
 - Projection 기반 조회 후 조립 구조 적용으로 유지보수성 및 확장성 개선
 
 #### 5. 외부 API 연동 안정화
 
 - Azure NAT Gateway 적용으로 outbound IP 고정 및 whitelist 기반 외부 API 호출 문제 해결
-
 - 내부 서비스와 외부 노출 대상 분리로 운영 환경 네트워크 안정성 개선
 
 ### 🔹 김진우
