@@ -174,7 +174,7 @@
 - **추천 엔진:** 사용자 데이터 기반 개인화 코디 추천 로직 개발
 
 ### 트러블슈팅
-- 간단 명료
+- 담당자가 추가
 ### 🔹 조성연 
 - **옷 관리:** 의상 등록, 조회 및 사용자 옷장 데이터 관리 기능 구현
     - 구매 링크 기반 상품 정보 자동 추출 기능 구현 (스크래핑 + LLM)
@@ -205,7 +205,27 @@
 
 ## 📊 ERD
 
-- 링크: https://www.erdcloud.com/d/WNbv4ftDp9Kgq7MFb
+<img width="4310" height="1782" alt="FitMe" src="https://github.com/user-attachments/assets/a8c2b535-5b55-43cb-ad94-b5e8c918b0a9" />
+
+ERD 상세 보기: [erdcloud 링크](https://www.erdcloud.com/d/WNbv4ftDp9Kgq7MFb)
+
+### ERD 핵심 도메인 설명
+
+- **Feed**
+  - 사용자 생성 콘텐츠(OOTD)의 중심 테이블
+  - 좋아요/댓글/검색 기능이 모두 연결되는 핵심 도메인
+
+- **User**
+  - 인증 및 사용자 식별을 담당하는 기본 엔티티
+  - 피드, 팔로우, 좋아요 등 모든 도메인의 기준이 되는 주체
+
+- **Clothes**
+  - 의상 정보 및 속성을 관리하는 도메인
+  - LLM 기반 데이터 추출 및 추천 기능과 직접 연결
+
+- **Weather**
+  - 지역 및 시간 기반 날씨 데이터를 관리
+  - 코디 추천 로직의 핵심 입력 데이터로 활용
 ---
 
 ## 📂 파일 구조
@@ -291,6 +311,3 @@ project-root
 - **이형일:** https://www.notion.so/347f4865b83680039418e77a12900f3e?v=28af4865b83681b49704000c3c73b2b5&source=copy_link
 - **최현석:**
 - **조성연:** [개발 리포트](https://m-ywork-story.tistory.com/entry/%EA%B0%9C%EB%B0%9C-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A5%BC-%EB%A7%88%EC%B9%98%EB%A9%B0-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EB%B6%80%ED%84%B0-E2E-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8%EA%B9%8C%EC%A7%80%EC%9D%98-%EA%B8%B0%EB%A1%9D) | [프로젝트 회고](https://m-ywork-story.tistory.com/entry/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0-FitMe)
-
-
-
